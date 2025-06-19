@@ -1,0 +1,43 @@
+.dark{
+
+    legend{
+        color: aliceblue;
+    }
+    input{
+        color: rgb(255, 255, 255);
+       
+    }
+    label{
+        color: aliceblue;
+    }
+    background-color: rgb(20, 20, 20);
+    p{
+        color: aliceblue;
+       
+    }
+
+    h1,h2,h3,h4,h5{
+        color: $gris;
+    }
+
+   
+    form{
+        input{
+            background-color: rgb(44, 44, 44);
+            border-radius: 5rem;
+        }
+
+        textarea{
+            color: aliceblue;
+            background-color: rgb(44, 44, 44);
+        }
+
+        select{
+            
+            background-color: rgb(46, 46, 46); 
+            color: aliceblue;
+          
+        }
+       
+    }
+}

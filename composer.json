@@ -1,0 +1,21 @@
+{
+    "name": "andre/pasteleria",
+    "description": "pasteleria cofe",
+    "autoload": {
+        "psr-4": {
+        "models\\": "./models",
+        "MVC\\": "./",
+        "controllers\\": "./controllers"
+    }
+    },
+    "authors": [
+        {
+            "name": "Steven Andre",
+            "email": "andremartines2010@gmail.com"
+        }
+    ],
+    "require": {"intervention/image": "^2.7",
+        "phpmailer/phpmailer": "^6.9"
+        
+    }
+}

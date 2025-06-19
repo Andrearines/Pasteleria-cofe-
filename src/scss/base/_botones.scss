@@ -1,0 +1,5 @@
+.boton{
+    @include boton(aliceblue,rgb(56, 56, 56),block);
+    margin-top: 1rem;
+width:100%;
+}

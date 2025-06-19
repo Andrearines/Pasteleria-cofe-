@@ -1,0 +1,18 @@
+.alerta{
+color: aliceblue;
+margin: 1rem auto;
+width: 90%;
+border-radius: 2rem;
+backdrop-filter: blur(5px);
+padding: 2rem 1rem;
+text-align: center;
+
+}
+
+.error{
+  background-color: rgb(121, 0, 0);
+  
+}
+.success{
+  background-color: green;
+}

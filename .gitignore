@@ -1,0 +1,5 @@
+/vendor/
+/node_modules/
+/includes/config/
+/public/build/
+
