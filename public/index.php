@@ -29,8 +29,11 @@ $r->get("/",[paginas::class,'visit']);
 
 // API Routes
 $r->get("/api/FindByAll",[API::class,'findbyall']);
-$r->post("/api/servicios/crear",[API::class,'crearServicio']);
+
+$r->post("/api/login/register",[API::class,'register']);
+
 $r->put("/api/servicios/actualizar",[API::class,'actualizarServicio']);
+
 $r->delete("/api/servicios/eliminar",[API::class,'eliminarServicio']);
 
 $r->Rutas();

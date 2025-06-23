@@ -1,10 +1,10 @@
 @import url("https://fonts.googleapis.com");
-@import url("https://fonts.gstatic.com");
+
 @import url("https://fonts.googleapis.com/css2?family=Jua&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
 
 // Fuentes
 $fuente_principal: "Jua", sans-serif !default;
-$fuente_secundaria: "Roboto", sans-serif !default;
+$fuente_secundaria: "roboto";
 
 // Tamaño de Media Queries
 $telefono: 480px;

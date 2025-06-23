@@ -9,8 +9,25 @@ function iniciarApp() {
     if(document.querySelector("#especiales-v")){
         categoria_id("categoria_id", 2);
     }
-    
+    if(document.querySelector("#register")){
+        register()
+    }
 }
+
+async function register() {
+    const form = document.querySelector("#register");
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const response = await fetch("/api/login/register", {
+            method: "POST",
+            body: formData
+        });
+        const data = await response.json(); // ← para procesar respuesta
+    console.log("Respuesta del servidor:", data);
+    })
+}
+
 
 async function categoria_id(column, value) {
     //categoria_id

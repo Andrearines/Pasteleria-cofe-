@@ -128,14 +128,6 @@ public static function findBy($column, $value){
     public function save(){
         $this->validate();
         if(empty(static::$errors)){
-
-            foreach (static::$columnDB as $column) {
-                if (property_exists($this, $column)) {
-                    $value = self::$db->real_escape_string($this->$column);
-                    $columns[] = "`$column`";
-                    $values[] = "'$value'";
-                }
-            }
             $query = "INSERT INTO " . static::$table . " () VALUES ('{}')";
             $result = self::$db->query($query);
             return $result;

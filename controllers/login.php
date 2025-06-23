@@ -14,6 +14,6 @@ class login{
     //-------------------------------------------------------------------------
     //-------------------------------------------------------------------------
     public static function register(Router $r){
-        $r->view("/login/register.php" ,["headerFrotante"=>true,"titulo"=>"Crear Cuenta", "script"=>"bundle.min"]);
+        $r->view("/login/register.php" ,["headerFrotante"=>true, "script"=>"bundle.min"]);
     }
 }
