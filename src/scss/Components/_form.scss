@@ -1,0 +1,54 @@
+.form{
+    background-color: rgb(20, 20, 20);
+    color: white;
+    padding: 2rem;
+    border-radius: 3rem;
+    form{
+        a{
+            color: white;
+            text-align: center;
+        }
+        display: flex;
+       flex-direction: column;
+       gap: 1rem;
+
+       .form-group{
+      label{
+        text-align: start;
+        display: block;
+      }
+        input{
+            background-color: whitesmoke;
+            width: 100%;
+            border-radius: 1rem;
+            padding: 1rem;
+            border:none;
+            display: block;
+
+            &:focus{
+                outline: none;
+                
+            }
+            &::placeholder{
+                color: #888;
+            }
+            &:-webkit-autofill {
+                -webkit-box-shadow: 0 0 0 30px white inset;
+                -webkit-text-fill-color: black;
+            }
+            &:-webkit-autofill:hover,
+            &:-webkit-autofill:focus {
+                -webkit-box-shadow: 0 0 0 30px white inset;
+                -webkit-text-fill-color: black;
+            }
+        }
+       }
+
+       button {
+color: black;
+&:hover{
+    color: white;
+}
+       }
+    }
+}
