@@ -59,21 +59,24 @@ class main
     $query = "SELECT * FROM " . static::$table . " WHERE id = $id LIMIT 1";
     $result = self::$db->query($query);
 
-    if ($row = $result->fetch_assoc()) {
-        return static::create($row);
-    }
-    return null;
+    $array = [];
+
+        while ($row = $result->fetch_assoc()) {
+            $array[] = static::create($row);
+        }
+        return $array;
 }
 
 public static function findBy($column, $value){
     $value = self::$db->real_escape_string($value);
-    $query = "SELECT * FROM " . static::$table . " WHERE $column = '$value' LIMIT 1";
+    $query = "SELECT * FROM " . static::$table . " WHERE $column = '$value'";
     $result = self::$db->query($query);
+  $array = [];
 
-    if ($row = $result->fetch_assoc()) {
-        return static::create($row);
-    }
-    return null;
+        while ($row = $result->fetch_assoc()) {
+            $array[] = static::create($row);
+        }
+        return $array;
 }
 
     public static function create($data){

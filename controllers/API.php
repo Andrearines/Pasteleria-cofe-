@@ -1,9 +1,20 @@
 <?php
 namespace controllers;
 use MVC\Router;
+use models\main;
+use models\menu;
+
 class API{
-    public static function servicios(Router $r){
-        echo json_encode('hola mundo');
+    public static function findbyall(Router $r){
+    $column = $_GET['column'] ?? null;
+$value = $_GET['value'] ?? null;
+        if(!$column || !$value){
+            echo json_encode(['error' => 'Column and value are required']);
+            return;
+        }
+        $S=[];
+         $S = menu::findBy($column,$value);
+        echo json_encode($S);
     }
      //-------------------------------------------------------------------------
     //-------------------------------------------------------------------------

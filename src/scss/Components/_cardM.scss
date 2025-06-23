@@ -1,0 +1,38 @@
+.especial-menu{
+    padding: 1rem;
+   
+    margin-bottom: 20vh;
+}
+.especiales-card{
+    margin:0  1rem ;
+    border-radius: 3rem;
+    position: relative;
+    height: 40vh;
+    width: 30vh;
+
+    h2{
+        margin-top: 90%;
+        color: white;
+        font-size: 2rem;
+    }
+    .layout{
+       
+        display: block;
+        border-radius: 3rem;
+        position: absolute;
+        inset: 0;
+        background-color: rgba(0, 0, 0, 0);
+        h2{
+            color: rgba(240, 248, 255, 0);
+        }
+         transition: background-color 0.3s ease-in-out;
+        &:hover{
+            transition: background-color 0.3s ease-in-out;
+            background-color: rgba(0, 0, 0, 0.664);
+            h2{
+            color: aliceblue;
+           }
+        }
+    }
+
+}

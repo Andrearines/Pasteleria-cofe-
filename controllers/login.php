@@ -3,7 +3,7 @@ namespace controllers;
 use MVC\Router;
 class login{
     public static function login(Router $r){
-        
+        $r->view("/login/login.php" ,["inicio"=>false, "titulo"=>"Iniciar Sesión", "script"=>"bundle.min"]);
     }
     //-------------------------------------------------------------------------
     //-------------------------------------------------------------------------

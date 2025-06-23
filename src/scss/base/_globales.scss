@@ -14,7 +14,7 @@ body {
 
 
 p {
-    
+    font-family: $fuente_secundaria;
     font-size: 2rem;
 }
 .contenedor {
@@ -36,7 +36,7 @@ picture {
 h1, h2, h3 {
     font-family: $fuente_principal;
     margin: calc($separacion / 2) 0;
-    font-weight: 300;
+    font-weight: 400;
     text-align: center;
     
 }

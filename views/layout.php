@@ -7,7 +7,11 @@ $auth = $_SESSION['admin'] ?? null;
 if(!isset($inicio)){
 
     $inicio=false;
+}
 
+if(!isset($titulo)){
+
+    $tituo="";
 }
 ?>
 <!DOCTYPE html>
@@ -21,15 +25,16 @@ if(!isset($inicio)){
 <body>
 
     <header class="header <?php echo $inicio ?"inicio":"" ?>">
-        <div class="contenedor contenido-header">
+        <div class="contenido-header">
 
             <div class="barra">
                 <a href="/">
-                    <img src="" alt="logo">
+                    <img src="/build/img/logo.jpeg" alt="logo">
                 </a>
            </div> <!--barra-->
 
-            <h1> </h1><!--titulo-->
+           <h1><?php echo($titulo)?></h1>
+
         </div>
     </header>
 
@@ -37,10 +42,13 @@ if(!isset($inicio)){
    
     
 <footer class="footer">
-        <div class="contenedor contenedor-footer">
-            <nav class="navegacion">
-                
-            </nav>
+        <div class="contenedor-footer">
+            <img src="build/img/logo.jpeg" alt="">
+            <div class="redes">
+                <img src="/build/img/iconos/Social Icons-1.svg" alt="">
+                <img src="/build/img/iconos/Social Icons-2.svg" alt="">
+                <img src="/build/img/iconos/Social Icons.svg" alt="">
+            </div>
         </div>
         <?php 
         
@@ -49,7 +57,9 @@ if(!isset($inicio)){
         ?>
         <p class="copyright">todos los derechos resevados <?php echo(date("Y"))?> &copy;</p>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
           <?php
+          
     if($script){
         echo "<script src='build/js/{$script}.js'></script>";
     }
