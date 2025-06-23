@@ -13,6 +13,10 @@ if(!isset($titulo)){
 
     $tituo="";
 }
+if(!isset($headerFrotante)){
+
+    $headerFrotante=false;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,7 +28,7 @@ if(!isset($titulo)){
 </head>
 <body>
 
-    <header class="header <?php echo $inicio ?"inicio":"" ?>">
+    <header class="header <?php echo $inicio ?"inicio":""; echo $headerFrotante ?"header-fotante":""; ?>">
         <div class="contenido-header">
 
             <div class="barra">

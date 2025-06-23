@@ -1,8 +1,13 @@
 .form{
-    background-color: rgb(20, 20, 20);
+
+    background-color: rgba(20, 20, 20, 0.486);
+    backdrop-filter: blur(3rem);
     color: white;
     padding: 2rem;
     border-radius: 3rem;
+    min-width: 30rem;
+    max-width: 40rem;
+    margin: auto 0;
     form{
         a{
             color: white;
@@ -18,7 +23,8 @@
         display: block;
       }
         input{
-            background-color: whitesmoke;
+            background-color: rgba(245, 245, 245, 0.637);
+            backdrop-filter: blur(3rem);
             width: 100%;
             border-radius: 1rem;
             padding: 1rem;
@@ -45,6 +51,8 @@
        }
 
        button {
+        backdrop-filter: blur(3rem);
+        opacity: 0.8;
 color: black;
 &:hover{
     color: white;

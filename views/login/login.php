@@ -1,5 +1,7 @@
 
-<main class="seccion contenedor subir" id="login">
+
+<div class="login">
+    <main class=" " id="login">
     <div class="form login-form">
         <h2>Login</h2>
         <form method="POST">
@@ -16,3 +18,4 @@
         </form>
     </div>
 </main>
+</div>
