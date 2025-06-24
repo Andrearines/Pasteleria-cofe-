@@ -21,19 +21,19 @@ $r->post("/forgot",[login::class,'forgot']);
 $r->get("/reset",[login::class,'reset']);
 $r->post("/reset",[login::class,'reset']);
 //confirm account
-$r->get("/confirmar",[login::class,'confirmar']);
+$r->get("/confirmar",[login::class,'confirm']);
 
 //visitas
-$r->get("/",[paginas::class,'visit']);
+$r->get("/",[paginas::class,'visit']); 
 
 
-// API Routes
+// API Routes(login)
 $r->get("/api/FindByAll",[API::class,'findbyall']);
 
 $r->post("/api/login/register",[API::class,'register']);
 
-$r->put("/api/servicios/actualizar",[API::class,'actualizarServicio']);
+$r->get("/api/login/confirm",[API::class,'confirm']);
 
-$r->delete("/api/servicios/eliminar",[API::class,'eliminarServicio']);
+
 
 $r->Rutas();

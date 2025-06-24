@@ -19,7 +19,7 @@ class main
     {
         self::$db = $database;
     }
-
+ 
     public function validate()
     {
        static::$errors = [];
@@ -125,7 +125,7 @@ public static function findBy($column, $value){
         return $array;
     }
 
-    public function save(){
+    public function save($img){
         $this->validate();
         if(empty(static::$errors)){
             $query = "INSERT INTO " . static::$table . " () VALUES ('{}')";

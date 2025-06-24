@@ -3,7 +3,7 @@ namespace controllers;
 use MVC\Router;
 use models\main;
 use models\menu;
-
+ 
 class paginas{
 
     public static function visit(Router $router){

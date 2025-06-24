@@ -7,7 +7,7 @@ class menu extends main{
     static $columnDB = ["id","nombre","precio","img","disponible","categoria_id"];
     public $id;
     public $nombre;
-    public $precio;
+    public $precio; 
     public $img;
     public $disponible;
     public $categoria_id;

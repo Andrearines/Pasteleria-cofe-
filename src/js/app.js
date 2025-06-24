@@ -3,34 +3,101 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function iniciarApp() {
-
     
+    if(document.querySelector("#token-texto-r")){
+        confirme()
+    }
 
     if(document.querySelector("#especiales-v")){
-        categoria_id("categoria_id", 2);
+         FindByAll("categoria_id", 2);
     }
     if(document.querySelector("#register")){
         register()
     }
 }
 
+
+async function confirme() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const texto = document.querySelector("#token-texto-r");
+    const token = urlParams.get("token");
+    const url = "/api/login/confirm?token=" + token;
+    const r =await fetch(url, {
+        method: "GET"
+    })
+     const data = await r.json();
+    if(data==true){
+        texto.textContent = "Cuenta confirmada, ahora puedes iniciar sesión";
+        Swal.fire({
+            title: "Cuenta confirmada",
+            text: "Ahora puedes iniciar sesión.",
+            icon: "success"
+        }).then(() => {
+            window.location.href = "/login";
+        });
+    }else{
+        texto.textContent = "Token no válido o expirado";
+        Swal.fire({
+            title: "Token no válido",
+            text: "El token proporcionado no es válido o ha expirado.",
+            icon: "error"
+        }).then(() => {
+            window.location.href = "/register";
+        });
+    }
+
+}
+
 async function register() {
-    const form = document.querySelector("#register");
+    try{
+        const form = document.querySelector("#register");
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
         const formData = new FormData(e.target);
+
+        Swal.fire({
+            title: "Procesando...",
+            text: "Por favor, espere.",
+            icon: "info",
+            showConfirmButton: false,
+            })
+
         const response = await fetch("/api/login/register", {
             method: "POST",
             body: formData
         });
-        const data = await response.json(); // ← para procesar respuesta
-    console.log("Respuesta del servidor:", data);
+        
+        const data = await response.json();
+        if(data==true){
+            Swal.fire({
+                title: "revisa tu correo",
+                text: "confirme su cuenta.",
+                icon: "info"
+            }).then(() => {
+                window.location.href = "/login";
+            });
+        }else{
+            Swal.fire({
+                title: "completar el formulario",
+                text: data,
+                icon: "info"
+            });
+        }
     })
+    }catch(data) {
+        Swal.fire({
+            title: "Error de conexión",
+            text: "Por favor, intente más tarde.",
+            icon: "error"
+        });
+        return;
+    }
+    
 }
 
 
-async function categoria_id(column, value) {
-    //categoria_id
+async function FindByAll(column, value) {
+    
     try{
   const response = await fetch("/api/FindByAll?column="+column+"&value="+value,
     {
