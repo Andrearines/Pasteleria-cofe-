@@ -38,6 +38,12 @@ if(!isset($headerFrotante)){
                 <a href="/">
                     <img src="/build/img/logo.jpeg" alt="logo">
                 </a>
+
+                <?php if($_SESSION["login"]==true){?>
+                <div class="acciones ">
+                    <a href="/logout" class="boton">salir</a>
+                </div>
+                <?php }?>
            </div> <!--barra-->
 
            <h1><?php echo($titulo)?></h1>

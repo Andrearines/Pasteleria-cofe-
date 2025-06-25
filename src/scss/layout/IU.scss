@@ -27,14 +27,28 @@ text-align: center;
  
 padding: 0;
  .contenido-header{
-
-
+ 
+.acciones{
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ .boton{
+ 
+   color: black;
+ }
+  .boton:hover{
+    color: white;
+  }
+}
  h1{
 
  font-size: 5vh;
       color: white;
     }
   .barra{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
     height: 16vh;
      width: auto;
     background-color:#161616bd;
