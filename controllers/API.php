@@ -10,13 +10,18 @@ class API{
     public static function findbyall(Router $r){
     $column = $_GET['column'] ?? null;
 $value = $_GET['value'] ?? null;
-        if(!$column || !$value){
+$value= filter_var($value,FILTER_SANITIZE_NUMBER_INT);
+if($value){
+ if(!$column || !$value){
             echo json_encode(['error' => 'Column and value are required']);
             return;
         }
         $S=[];
          $S = menu::findBy($column,$value);
         echo json_encode($S);
+}
+
+       
     }
      //-------------------------------------------------------------------------
     //-------------------------------------------------------------------------
@@ -37,6 +42,25 @@ $value = $_GET['value'] ?? null;
     $token = $_GET['token'] ?? null;
         $user= user::confirm($token);
         echo json_encode($user);
+  }
+  public static function forget(Router $r){
+    $r = new user($_POST);
+    $r = $r->forget();
+    echo json_encode($r);
+  }
+
+  public static function login(Router $r){
+    $user = new user($_POST);
+    $r = $user->login();
+    echo json_encode($r);
+  }
+
+  public static function reset(Router $r){
+   
+   $user = new user($_POST);
+   $user->token=$_GET['token'];
+    $r = $user->reset();
+    echo json_encode($r);
   }
 
 }

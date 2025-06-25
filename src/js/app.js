@@ -4,6 +4,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function iniciarApp() {
     
+
+
+    if(document.querySelector("#reset-form")){
+        resetPassword();
+    }
+    if(document.querySelector("#forgert-form")) {
+        forgetPassword();
+    }
     if(document.querySelector("#token-texto-r")){
         confirme()
     }
@@ -14,8 +22,123 @@ function iniciarApp() {
     if(document.querySelector("#register")){
         register()
     }
+
+    if(document.querySelector("#login")){
+        login()
+    }
+
 }
 
+async function login(){
+
+    const form = document.querySelector("#login-form")
+    form.addEventListener("submit", async(e)=>{
+        e.preventDefault()
+        const data = new FormData(e.target)
+        const response = await fetch("/api/login",{
+            method:"POST",
+            body:data
+        })
+         Swal.fire({
+            title: "Procesando...",
+            text: "Por favor, espere.",
+            icon: "info",
+            showConfirmButton: false,
+        });
+        const r = await response.json()
+
+        if(r==true){
+            Swal.fire({
+                title: "bienvenido",
+                icon: "success"
+                
+            }).then(() => {
+                window.location.href = "/home";
+            });
+        }else{
+             Swal.fire({
+                title: "Error",
+                text: r,
+                icon: "error"
+            });
+        }
+
+    })
+    
+}
+
+async function resetPassword() {
+    const form = document.querySelector("#reset-form");
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get("token");
+        const response = await fetch("/api/login/reset?token="+token , {
+            method: "POST",
+            body: formData
+        })
+
+        Swal.fire({
+            title: "Procesando...",
+            text: "Por favor, espere.",
+            icon: "info",
+            showConfirmButton: false,
+        });
+        const r = await response.json();
+        if(r==true){
+            Swal.fire({
+                title: "Contraseña restablecida",
+                text: "Tu contraseña ha sido restablecida correctamente.",
+                icon: "success"
+            }).then(() => {
+                window.location.href = "/login";
+            });
+        }else{
+            Swal.fire({
+                title: "Error",
+                text: r,
+                icon: "error"
+            });
+        }
+    })
+}
+async function forgetPassword() {
+    const form = document.querySelector("#forgert-form");
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        
+        Swal.fire({
+            title: "Procesando...",
+            text: "Por favor, espere.",
+            icon: "info",
+            showConfirmButton: false,
+        });
+
+        const response = await fetch("/api/login/forget", {
+            method: "POST",
+            body: formData
+        });
+
+        const data = await response.json();
+        if(data==true){
+            Swal.fire({
+                title: "Revisa tu correo",
+                text: "Si el correo existe, recibirás un enlace para restablecer tu contraseña.",
+                icon: "info"
+            }).then(() => {
+                window.location.href = "/login";
+            });
+        }else{
+            Swal.fire({
+                title: "Error",
+                text: data,
+                icon: "error"
+            });
+        }
+    })
+}
 
 async function confirme() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -110,7 +233,9 @@ async function FindByAll(column, value) {
         Swal.fire({
             title: "no se pudo conectar con la base de datos?",
             text: "Por favor, intente más tarde.",
-            icon: "error"
+            icon: "error",
+            showConfirmButton: false,
+
         });
         return;
    }

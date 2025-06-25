@@ -15,8 +15,8 @@ $r->get("/logout",[login::class,'logout']);
 $r->get("/register",[login::class,'register']);
 $r->post("/register",[login::class,'register']);
 //forgot password
-$r->get("/forgot",[login::class,'forgot']);
-$r->post("/forgot",[login::class,'forgot']);
+$r->get("/forget",[login::class,'forget']);
+$r->post("/forget",[login::class,'forget']);
 //reset password
 $r->get("/reset",[login::class,'reset']);
 $r->post("/reset",[login::class,'reset']);
@@ -26,14 +26,15 @@ $r->get("/confirmar",[login::class,'confirm']);
 //visitas
 $r->get("/",[paginas::class,'visit']); 
 
+//home
+$r->get("/home",[paginas::class,"home"]);
 
 // API Routes(login)
 $r->get("/api/FindByAll",[API::class,'findbyall']);
-
+$r->post("/api/login",[API::class,"login"]);
 $r->post("/api/login/register",[API::class,'register']);
-
+$r->post("/api/login/forget",[API::class,'forget']);
+$r->post("/api/login/reset",[API::class,'reset']);
 $r->get("/api/login/confirm",[API::class,'confirm']);
-
-
 
 $r->Rutas();

@@ -31,7 +31,23 @@ class login{
         ]);
     }
     //-------------------------------------------------------------------------
+    public static function forget(Router $r){
+        $r->view("/login/forget.php" ,["headerFrotante"=>true, "script"=>"bundle.min"]);
+    }
     //-------------------------------------------------------------------------
+    public static function reset(Router $r){
+        $token = $_GET['token'] ?? null;
+        if(!$token){
+            header("Location: /login");
+            return;
+        }    
+        $r->view("/login/reset.php", [
+            "headerFrotante" => true,
+            "inicio" => false,
+            "script" => "bundle.min",
+          
+        ]);
+    }
     //-------------------------------------------------------------------------
     //-------------------------------------------------------------------------
     //-------------------------------------------------------------------------
@@ -40,4 +56,6 @@ class login{
     public static function register(Router $r){
         $r->view("/login/register.php" ,["headerFrotante"=>true, "script"=>"bundle.min"]);
     }
+
+
 }

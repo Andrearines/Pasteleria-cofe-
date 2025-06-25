@@ -2,7 +2,7 @@
 
 <div class="login">
     <main class=" " id="login">
-    <div class="form login-form">
+    <div class="form "id="login-form">
         <h2>Login</h2>
         <form method="POST">
             <div class="form-group">
@@ -14,6 +14,7 @@
                 <input type="password" id="password" name="password" required>
             </div>
             <a href="/register">no tengo cuenta</a>
+            <a href="/forget">¿Olvidaste tu contraseña?</a>
             <button type="submit" class="boton">Iniciar Sesión</button>
         </form>
     </div>
