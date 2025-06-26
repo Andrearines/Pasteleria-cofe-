@@ -22,6 +22,9 @@ function iniciarApp() {
     if(document.querySelector("#especiales-h")){
             FindByAll("categoria_id", 2,"#especiales-h","especiales-card",2);
     }
+    if(document.querySelector("#categorias")){
+        CAll()
+     }
     if(document.querySelector("#especiales-v")){
          FindByAll("categoria_id", 2,"#especiales-v","especiales-card",1);
     }
@@ -253,7 +256,7 @@ async function FindByAll(column, value,elemeto,clase,tipo) {
     text: "Por favor, espere.",
     icon: "info",
     showConfirmButton: false,
-    timer: 6000,
+    timer: 8000,
     timerProgressBar: true,
 });
   const data = await response.json();
