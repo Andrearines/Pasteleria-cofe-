@@ -5,24 +5,28 @@ use MVC\Router;
 use models\main;
 use models\user;
 use models\menu;
+use models\categoria;
 
 class API{
-    public static function findbyall(Router $r){
+    public static function findbyall(){
     $column = $_GET['column'] ?? null;
-$value = $_GET['value'] ?? null;
-$value= filter_var($value,FILTER_SANITIZE_NUMBER_INT);
-if($value){
- if(!$column || !$value){
-            echo json_encode(['error' => 'Column and value are required']);
-            return;
-        }
-        $S=[];
-         $S = menu::findBy($column,$value);
+     $value = $_GET['value'] ?? null;
+     $value= filter_var($value,FILTER_SANITIZE_NUMBER_INT);
+     if($value){
+      if(!$column || !$value){
+                 echo json_encode(['error' => 'Column and value are required']);
+                 return;
+             }
+             $S=[];
+              $S = menu::findBy($column,$value);
         echo json_encode($S);
-}
+} }
 
-       
-    }
+public static function call(){
+  $r=[];
+  $r=categoria::all();
+  echo json_encode($r);
+}
      //-------------------------------------------------------------------------
     //-------------------------------------------------------------------------
     //-------------------------------------------------------------------------

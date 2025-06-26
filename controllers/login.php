@@ -4,6 +4,10 @@ use MVC\Router;
 use models\user;
 class login{
     public static function login(Router $r){
+        session_start();
+        if($_SESSION["login"]==true){
+            mover("/home");
+        }
         $r->view("/login/login.php" ,["headerFrotante"=>true,"inicio"=>false, "script"=>"bundle.min"]);
     }
     //-------------------------------------------------------------------------

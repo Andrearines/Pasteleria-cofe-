@@ -16,8 +16,14 @@ function iniciarApp() {
         confirme()
     }
 
+    if(document.querySelector("#categorias")){
+       CAll()
+    }
+    if(document.querySelector("#especiales-h")){
+            FindByAll("categoria_id", 2,"#especiales-h","especiales-card",2);
+    }
     if(document.querySelector("#especiales-v")){
-         FindByAll("categoria_id", 2);
+         FindByAll("categoria_id", 2,"#especiales-v","especiales-card",1);
     }
     if(document.querySelector("#register")){
         register()
@@ -218,17 +224,43 @@ async function register() {
     
 }
 
+async function CAll(){
+    try{
+    const response = await fetch("/api/categorias/all",{
+        method: "GET"
+    });
+    const data = await response.json();
+    mostrarC(data,"#categorias","categoria-card");
+    }catch(error){
+        Swal.fire({
+            title: "Error de conexión",
+            text: "Por favor, intente más tarde.",
+            icon: "error"
+        });
+    }
+}
 
-async function FindByAll(column, value) {
+
+async function FindByAll(column, value,elemeto,clase,tipo) {
     
     try{
   const response = await fetch("/api/FindByAll?column="+column+"&value="+value,
     {
         method: "GET",}
    );
+   Swal.fire({
+    title: "Procesando...",
+    text: "Por favor, espere.",
+    icon: "info",
+    showConfirmButton: false,
+    timer: 6000,
+    timerProgressBar: true,
+});
   const data = await response.json();
 
- mostrar(data,"#especiales-v","especiales-card");
+  if(tipo=="1"){ mostrar(data,elemeto,clase);}
+ 
+  if(tipo=="2"){ mostrarH(data,elemeto,clase);}
    }catch(error) {
         Swal.fire({
             title: "no se pudo conectar con la base de datos?",
@@ -237,10 +269,43 @@ async function FindByAll(column, value) {
             showConfirmButton: false,
 
         });
-        return;
+        
    }
     
    
+    }
+
+    function mostrarH(especiales,elemeto,clase) {
+      
+        const contendor = document.querySelector(elemeto);
+
+        especiales.forEach(especial => {
+             const {id,nombre,precio,img,categoria_id}=especial;
+
+        const card=document.createElement("div");
+         card.style.backgroundImage = `url(/build/img/imagenes_menu/${img})`;
+         card.lazy = "true";
+         card.style.backgroundSize = "cover";
+        card.style.backgroundPosition = "center";
+        card.style.backgroundRepeat = "no-repeat";
+        card.dataset.id=id;
+        
+        const layout = document.createElement("div");
+        layout.classList.add("layout");
+        
+       
+        card.appendChild(layout);
+        card.classList.add(clase);
+      
+        
+        const titulo=document.createElement("h2");
+        titulo.textContent = nombre;
+        layout.appendChild(titulo);
+        contendor.appendChild(card);
+        });
+
+       
+       
     }
 
 
@@ -257,6 +322,7 @@ function mostrar(especiales,elemeto,clase) {
          card.style.backgroundSize = "cover";
         card.style.backgroundPosition = "center";
         card.style.backgroundRepeat = "no-repeat";
+        card.dataset.id=id;
         
         const layout = document.createElement("a");
         layout.classList.add("layout");
@@ -267,6 +333,38 @@ function mostrar(especiales,elemeto,clase) {
         
         const titulo=document.createElement("h2");
         titulo.textContent = nombre;
+        layout.appendChild(titulo);
+        contendor.appendChild(card);
+        });
+
+       
+       
+    }
+
+    function mostrarC(categorias,elemeto,clase) {
+      
+        const contendor = document.querySelector(elemeto);
+
+        categorias.forEach(c=> {
+             const {id,categoria,img}=c;
+
+        const card=document.createElement("div");
+         card.style.backgroundImage = `url(/build/img/imagenes_categorias/${img})`;
+         card.lazy = "true";
+         card.style.backgroundSize = "cover";
+        card.style.backgroundPosition = "center";
+        card.style.backgroundRepeat = "no-repeat";
+        card.dataset.id=id;
+        
+        const layout = document.createElement("a");
+        layout.classList.add("layout");
+        layout.href = "/categorias?id="+id;
+        card.appendChild(layout);
+        card.classList.add(clase);
+      
+        
+        const titulo=document.createElement("h2");
+        titulo.textContent = categoria;
         layout.appendChild(titulo);
         contendor.appendChild(card);
         });

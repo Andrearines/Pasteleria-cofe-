@@ -42,6 +42,16 @@ if(!isset($headerFrotante)){
                 <?php if($_SESSION["login"]==true){?>
                 <div class="acciones ">
                     <a href="/logout" class="boton">salir</a>
+                    <a href="/carito" class="carito">
+                    <script src="https://animatedicons.co/scripts/embed-animated-icons.js"></script>
+                       <animated-icons
+                         src="https://animatedicons.co/get-icon?name=shopping&style=minimalistic&token=1a426870-e168-49f4-b12a-f584dc9f311e"
+                         trigger="loop"
+                         attributes='{"variationThumbColour":"#A4A7A9","variationName":"Gray Tone","variationNumber":3,"numberOfGroups":1,"strokeWidth":0.8,"backgroundIsGroup":true,"defaultColours":{"group-1":"#000000","background":"#FFFFFFFF"}}'
+                         height="100"
+                         width="100"
+                       ></animated-icons>
+                   </a>
                 </div>
                 <?php }?>
            </div> <!--barra-->

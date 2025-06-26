@@ -31,6 +31,7 @@ $r->get("/home",[paginas::class,"home"]);
 
 // API Routes(login)
 $r->get("/api/FindByAll",[API::class,'findbyall']);
+$r->get("/api/categorias/all",[API::class,'call']);
 $r->post("/api/login",[API::class,"login"]);
 $r->post("/api/login/register",[API::class,'register']);
 $r->post("/api/login/forget",[API::class,'forget']);
