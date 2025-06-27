@@ -78,6 +78,7 @@ class user extends main
                                     "nombre"=>$user["nombre"],
                                     "img"=> $user["img"],
                                     "direccion" =>$user["direccion"],
+                                    "email"=>$user["email"],
                                     "login"=>true,
                                     "admin"=>$admin];
 

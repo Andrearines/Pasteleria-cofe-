@@ -15,14 +15,16 @@ function iniciarApp() {
     if(document.querySelector("#token-texto-r")){
         confirme()
     }
-
     if(document.querySelector("#categorias")){
-       CAll()
-    }
-    if(document.querySelector("#especiales-h")){
-            FindByAll("categoria_id", 2,"#especiales-h","especiales-card",2);
-    }
-    if(document.querySelector("#categorias")){
+        if(document.querySelector("#carrito")){
+            carrito=[]
+            const icon=document.querySelector("#carrito")
+            icon.addEventListener("click",()=>{
+                modalCarrito();
+            })
+        }
+        
+        FindByAll("categoria_id", 2,"#especiales-h","especiales-card",2);
         CAll()
      }
     if(document.querySelector("#especiales-v")){
@@ -292,15 +294,13 @@ async function FindByAll(column, value,elemeto,clase,tipo) {
         card.style.backgroundPosition = "center";
         card.style.backgroundRepeat = "no-repeat";
         card.dataset.id=id;
-        
         const layout = document.createElement("div");
         layout.classList.add("layout");
-        
-       
+        layout.addEventListener("click",()=>{
+            modal(id,img,nombre,precio);
+        });
         card.appendChild(layout);
         card.classList.add(clase);
-      
-        
         const titulo=document.createElement("h2");
         titulo.textContent = nombre;
         layout.appendChild(titulo);
@@ -311,6 +311,77 @@ async function FindByAll(column, value,elemeto,clase,tipo) {
        
     }
 
+    function modalCarrito(){
+        const img = document.querySelector("#perfil-img").value;
+        const nombre = document.querySelector("#perfil-nombre").value;
+        const email = document.querySelector("#perfil-email").value;
+
+        if(document.querySelector("#modal-carrito")){
+            
+           cerrarModal("#modal-carrito");
+            return;
+        }
+      
+        document.body.style.overflow = 'hidden';
+        const modal = document.createElement("div");
+        const contendor = document.querySelector("body");
+        modal.classList.add("modal-carrito");
+        modal.classList.add("modal");
+        modal.id="modal-carrito";
+        modal.innerHTML = `
+        <div class="modal-content">
+            <h2>Carrito</h2>
+        </div>
+        <div class="perfil">
+            <img src="/build/img/imagenes_perfiles/${img}" alt="perfil">
+            <div class="perfil-info">
+                <p>${nombre}</p>
+                <p>${email}</p>
+            </div>
+        </div>
+        <div class="carrito-items">
+            
+        </div>
+        <div class="modal-carrito-footer">
+            <button class="boton btn-cerrar" id="btn-cerrar" style="margin-bottom: 8rem;" onclick="cerrarModal('#modal-carrito')">cerrar</button>
+        </div>
+        `;
+        contendor.appendChild(modal);
+        
+    }
+
+    function modal(id,img,nombre,precio){
+        
+        if(document.querySelector("#modal")){
+            cerrarModal("#modal");
+            return;
+        }
+        const modal = document.createElement("div");
+        const contendor = document.querySelector("body");
+        modal.classList.add("modal");
+        modal.dataset.id=id;
+        modal.id="modal";
+        
+        modal.innerHTML = `
+        <div class="modal-content"> 
+            <img src="/build/img/imagenes_menu/${img}" alt="${nombre}">
+            <h2>${nombre}</h2>
+            <p style="text-align: start;">${precio}</p>
+            <div class="modal-footer">
+            <button class="boton btn-añadir" id="btn-añadir" onclick="añadir()">añadir</button>
+            <input type="number" class="input" id="btn-cantidad" placeholder="cantidad" min="1" max="10">
+            </div>
+            <button class="boton btn-cerrar" id="btn-cerrar" style="margin-bottom: 8rem;" onclick="cerrarModal('#modal')">cerrar</button>
+        `;
+       
+        contendor.appendChild(modal);
+    }
+
+    function cerrarModal(m){
+        document.body.style.overflow = 'auto';
+        const modal = document.querySelector(m);
+        modal.remove();
+    }
 
 function mostrar(especiales,elemeto,clase) {
       

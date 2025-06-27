@@ -29,7 +29,7 @@
     padding: 1rem 2rem;
     background-color: $color;
     font-weight: bold;
-        color: azure;
+        color: rgb(0, 0, 0);
         text-decoration: none;
         text-align: center;
         display:$display ;
@@ -40,6 +40,7 @@
 &:hover{
     transition-property: background-color;
     transition-duration: .3s;
+    color: rgb(255, 255, 255);
     background-color:$hover;
     cursor: pointer;
 }

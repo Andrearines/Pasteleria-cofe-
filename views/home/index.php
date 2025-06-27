@@ -10,4 +10,9 @@
 
 </div>
 
+<input type="hidden" name="seccion" id="perfil-img" value="<?php echo $_SESSION["img"]; ?>">
+<input type="hidden" name="seccion" id="perfil-nombre" value="<?php echo $_SESSION["nombre"]; ?>">
+<input type="hidden" name="seccion" id="perfil-email" value="<?php echo $_SESSION["email"]; ?>">
+
+
 </main>

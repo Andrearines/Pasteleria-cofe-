@@ -1,0 +1,108 @@
+#modal{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 80%;
+    background-color: rgba(0, 0, 0, 0.781);
+    backdrop-filter: blur(1rem);
+    border-radius: 2rem 2rem 0 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    .modal-content{
+        width: 100%;
+        height: 100%;
+
+        h2{
+            color: aliceblue;
+            text-align: start;
+        }
+        p{
+            color: aliceblue;
+            text-align: start;
+        }
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        img{
+            border-radius: 2rem 2rem 0 0;
+            width: 100%;
+            height: 50%;
+            object-fit: cover;
+            object-position: center;
+        }
+    }
+}
+
+.modal-carrito{
+    color: aliceblue;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 80%;
+    background-color: rgba(0, 0, 0, 0.781);
+    backdrop-filter: blur(1rem);
+    border-radius: 2rem 2rem 0 0;
+    z-index: 1000;
+    .carrito-items{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        width: 100%;
+    }
+    .perfil{
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        img{
+            width: 5rem;
+            height: 5rem;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .perfil-info{
+
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+    }
+}
+
+
+.modal-footer{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    gap: 1rem;
+    .boton{
+        height: 100%;
+       width: 60%;
+    }
+    .input{
+        width: 40%;
+        height: 5rem;
+        border: none;
+        border-radius: 1rem 0 0 1rem;
+        text-align: center;
+        background-color: rgb(255, 255, 255);
+        color: rgb(0, 0, 0);
+        &:hover{
+            background-color: rgb(255, 255, 255);
+            color: rgb(0, 0, 0);
+        }
+    }
+   
+}

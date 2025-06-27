@@ -42,7 +42,7 @@ if(!isset($headerFrotante)){
                 <?php if($_SESSION["login"]==true){?>
                 <div class="acciones ">
                     <a href="/logout" class="boton">salir</a>
-                    <a href="/carito" class="carito">
+                    <div id="carrito">
                     <script src="https://animatedicons.co/scripts/embed-animated-icons.js"></script>
                        <animated-icons
                          src="https://animatedicons.co/get-icon?name=shopping&style=minimalistic&token=1a426870-e168-49f4-b12a-f584dc9f311e"
@@ -51,7 +51,7 @@ if(!isset($headerFrotante)){
                          height="100"
                          width="100"
                        ></animated-icons>
-                   </a>
+                   </div>
                 </div>
                 <?php }?>
            </div> <!--barra-->
