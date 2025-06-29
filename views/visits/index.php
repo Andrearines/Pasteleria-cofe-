@@ -5,7 +5,7 @@ mover("/home");
 }
 ?>
 <h2>especiales</h2>
-<main class="especial-menu carousel" id="especiales-v">
+<main class="especial-menu carousel subi" id="especiales-v">
     <div class="especial-comida">
         
     </div>

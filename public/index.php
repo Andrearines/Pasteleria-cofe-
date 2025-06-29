@@ -36,6 +36,7 @@ $r->post("/api/login",[API::class,"login"]);
 $r->post("/api/login/register",[API::class,'register']);
 $r->post("/api/login/forget",[API::class,'forget']);
 $r->post("/api/login/reset",[API::class,'reset']);
+$r->post("/api/envio",[API::class,'envio']);
 $r->get("/api/login/confirm",[API::class,'confirm']);
 
 $r->Rutas();

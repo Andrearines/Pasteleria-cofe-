@@ -18,14 +18,19 @@ function iniciarApp() {
     if(document.querySelector("#categorias")){
         if(document.querySelector("#carrito")){
             carrito=[]
+            pedido=[]
             const icon=document.querySelector("#carrito")
             icon.addEventListener("click",()=>{
                 modalCarrito();
             })
         }
         
-        FindByAll("categoria_id", 2,"#especiales-h","especiales-card",2);
-        CAll()
+        Promise.all([
+            FindByAll("categoria_id", 2,"#especiales-h","especiales-card",2),
+            CAll()
+        ]).catch(error => {
+            console.error("Error cargando datos:", error);
+        });
      }
     if(document.querySelector("#especiales-v")){
          FindByAll("categoria_id", 2,"#especiales-v","especiales-card",1);
@@ -247,38 +252,25 @@ async function CAll(){
 
 
 async function FindByAll(column, value,elemeto,clase,tipo) {
-    
     try{
-  const response = await fetch("/api/FindByAll?column="+column+"&value="+value,
-    {
-        method: "GET",}
-   );
-   Swal.fire({
-    title: "Procesando...",
-    text: "Por favor, espere.",
-    icon: "info",
-    showConfirmButton: false,
-    timer: 8000,
-    timerProgressBar: true,
-});
-  const data = await response.json();
-
-  if(tipo=="1"){ mostrar(data,elemeto,clase);}
- 
-  if(tipo=="2"){ mostrarH(data,elemeto,clase);}
-   }catch(error) {
-        Swal.fire({
-            title: "no se pudo conectar con la base de datos?",
-            text: "Por favor, intente más tarde.",
-            icon: "error",
-            showConfirmButton: false,
-
+        const response = await fetch("/api/FindByAll?column="+column+"&value="+value,
+        {
+            method: "GET",
         });
         
-   }
-    
-   
+        const data = await response.json();
+
+        if(tipo=="1"){ mostrar(data,elemeto,clase);}
+        if(tipo=="2"){ mostrarH(data,elemeto,clase);}
+    }catch(error) {
+        Swal.fire({
+            title: "Error de conexión",
+            text: "Por favor, intente más tarde.",
+            icon: "error",
+            showConfirmButton: true,
+        });
     }
+}
 
     function mostrarH(especiales,elemeto,clase) {
       
@@ -311,14 +303,51 @@ async function FindByAll(column, value,elemeto,clase,tipo) {
        
     }
 
+
+    function añadir(){
+        const cantidad = document.querySelector("#btn-cantidad").value;
+        const cantidadint= parseInt(cantidad);
+        const id = document.querySelector("#modal").dataset.id;
+        const nombre = document.querySelector("#modal").dataset.nombre;
+        const precio = document.querySelector("#modal").dataset.precio;
+        const img = document.querySelector("#modal").dataset.img;
+        const item = {id,nombre,precio,img,cantidadint};
+        if(carrito.find(item => item.id == id)){
+            const index = carrito.findIndex(item => item.id == id);
+            carrito[index].cantidadint += cantidadint;
+        }else if(cantidad==0){
+            Swal.fire({
+                title: "Cantidad no válida",
+                text: "La cantidad no puede ser 0",
+                icon: "error"
+            });
+        }
+        else{
+            carrito.push(item);
+        }
+    
+        cerrarModal("#modal");
+        
+        
+    }
+
     function modalCarrito(){
         const img = document.querySelector("#perfil-img").value;
         const nombre = document.querySelector("#perfil-nombre").value;
         const email = document.querySelector("#perfil-email").value;
+        const direccion = document.querySelector("#perfil-direccion").value;
 
         if(document.querySelector("#modal-carrito")){
             
            cerrarModal("#modal-carrito");
+            return;
+        }
+
+        if(carrito.length==0){
+            Swal.fire({
+                title: "No hay productos en el carrito",
+                icon: "error"
+            });
             return;
         }
       
@@ -337,21 +366,147 @@ async function FindByAll(column, value,elemeto,clase,tipo) {
             <div class="perfil-info">
                 <p>${nombre}</p>
                 <p>${email}</p>
+                
             </div>
         </div>
-        <div class="carrito-items">
-            
+        <h3>pasteles</h3>
+        ${carrito.map(item => `
+        <div class="carrito-item">
+            <img src="/build/img/imagenes_menu/${item.img}" alt="${item.nombre}">
+            <div class="carrito-item-info">
+            <h2>${item.nombre}</h2>
+            <p>${item.precio}</p>
+            <p>(${item.cantidadint})</p>
+            </div>
+            <button class="boton btn-eliminar" onclick="eliminarItem(${item.id})"><img class="icono-eliminar" src="/build/img/iconos/eiminar.svg" alt="eliminar"></button>
+        </div>
+        `).join("")}
+        <p>total: ${carrito.reduce((acc,item)=> acc+item.precio*item.cantidadint,0).toFixed(2)}</p>
+        <div class="fecha enviar-carrito">
+        <input type="time" class="input" id="hora" placeholder="hora" min="07:00" max="23:00" step="900" value="07:00">
+        <input type="date" class="input" id="fecha" placeholder="fecha" min="${new Date().toISOString().split('T')[0]}">
+        </div>
+        <div class="alertas">     
+                <p id="alerta-hora"></p>
+        </div>
+       <div class="enviar-carrito">
+       <button class="boton-blanco btn-enviar" id="btn-enviar" onclick="enviar()">enviar pedido</button>
+       <input type="text" class="input" id="direccion" placeholder="direccion" value="${direccion}">
+       </div>
         </div>
         <div class="modal-carrito-footer">
-            <button class="boton btn-cerrar" id="btn-cerrar" style="margin-bottom: 8rem;" onclick="cerrarModal('#modal-carrito')">cerrar</button>
+            <button class="boton-blanco btn-cerrar" id="btn-cerrar" style="margin-bottom: 8rem;" onclick="cerrarModal('#modal-carrito')">cerrar</button>
         </div>
         `;
         contendor.appendChild(modal);
+
+        const fecha = document.querySelector("#fecha");
+        const hora = document.querySelector("#hora");
+        const alertaHora = document.querySelector("#alerta-hora");
         
+     
+        // Validación de hora
+        hora.addEventListener("change", () => {
+            const horaSeleccionada = hora.value;
+            const [horas, minutos] = horaSeleccionada.split(':').map(Number);
+            const horaActual = new Date();
+            const horaActualNum = horaActual.getHours();
+            const minutosActuales = horaActual.getMinutes();
+            
+            // Limpiar alerta anterior
+            alertaHora.textContent = "";
+            
+            // Validar rango de horas (7am a 11pm)
+            if(horas < 7 || horas >= 12) {
+                alertaHora.textContent = "Solo se puede seleccionar de 7:00 AM a 12:00 PM";
+                hora.value = "";
+                return;
+            }
+            
+            // Si es hoy, validar que no sea hora pasada
+            const fechaSeleccionada = new Date(fecha.value);
+            const fechaActual = new Date();
+            const esHoy = fechaSeleccionada.toDateString() === fechaActual.toDateString();
+            
+            if(esHoy) {
+                // Si es la hora actual o anterior
+                if(horas < horaActualNum || (horas === horaActualNum && minutos <= minutosActuales)) {
+                    alertaHora.textContent = "No se puede seleccionar la hora actual o anterior";
+                    hora.value = "";
+                    return;
+                }
+                
+                // Validar que tenga al menos 1 hora de anticipación
+                const tiempoMinimo = new Date();
+                tiempoMinimo.setHours(tiempoMinimo.getHours() + 1);
+                
+                if(horas <= tiempoMinimo.getHours()) {
+                    alertaHora.textContent = "Debe seleccionar al menos 1 hora de anticipación";
+                    hora.value = "";
+                    return;
+                }
+            }
+        });
+    }
+
+   async function enviar(){
+        const id = document.querySelector("#perfil-id").value;
+        const fecha = document.querySelector("#fecha").value;
+        if(fecha==null){
+            Swal.fire({
+                title: "Fecha no válida",
+                text: "Por favor, seleccione una fecha",
+                icon: "error"
+            });
+        }
+        const hora = document.querySelector("#hora").value;
+        const direccion = document.querySelector("#direccion").value;
+    
+       
+        const $url = "/api/envio";
+        carrito.forEach(async item => {
+            const formData = new FormData();
+            formData.append('usuario_id', id);
+            formData.append('fecha', fecha);
+            formData.append('hora', hora);
+            formData.append('direccion', direccion);
+            formData.append('pastel_id', item.id);
+            formData.append('cantidad', item.cantidadint);
+            Swal.fire({
+                title: "Procesando...",
+                text: "Por favor, espere.",
+                icon: "info",
+                showConfirmButton: false,
+            });
+            const response = await fetch($url,{
+                method: "POST",
+                body: formData
+            })
+            const data = await response.json();
+            if(data==true){
+                Swal.fire({
+                    title: "Pedido enviado",
+                    text: "El pedido ha sido enviado correctamente",
+                    icon: "success"
+                });
+            }else{
+                Swal.fire({
+                    title: "Error",
+                    text: data,
+                    icon: "error"
+                });
+            }
+       
+        })
+    }
+
+    function eliminarItem(id){
+        carrito = carrito.filter(item => item.id != id);
+        modalCarrito();
     }
 
     function modal(id,img,nombre,precio){
-        
+        document.body.style.overflow = 'hidden';
         if(document.querySelector("#modal")){
             cerrarModal("#modal");
             return;
@@ -360,18 +515,23 @@ async function FindByAll(column, value,elemeto,clase,tipo) {
         const contendor = document.querySelector("body");
         modal.classList.add("modal");
         modal.dataset.id=id;
+        modal.dataset.nombre=nombre;
+        modal.dataset.precio=precio;
+        modal.dataset.img=img;
         modal.id="modal";
         
         modal.innerHTML = `
+        <img src="/build/img/imagenes_menu/${img}" alt="${nombre}">
+        <div class="">
         <div class="modal-content"> 
-            <img src="/build/img/imagenes_menu/${img}" alt="${nombre}">
             <h2>${nombre}</h2>
-            <p style="text-align: start;">${precio}</p>
+            <p>${precio}</p>
             <div class="modal-footer">
-            <button class="boton btn-añadir" id="btn-añadir" onclick="añadir()">añadir</button>
-            <input type="number" class="input" id="btn-cantidad" placeholder="cantidad" min="1" max="10">
+            <button class="boton-blanco btn-añadir" id="btn-añadir" onclick="añadir()">añadir</button>
+            <input type="number" class="input" id="btn-cantidad" min="1" max="10" value="1">
             </div>
-            <button class="boton btn-cerrar" id="btn-cerrar" style="margin-bottom: 8rem;" onclick="cerrarModal('#modal')">cerrar</button>
+            <button class="boton-blanco btn-cerrar" id="btn-cerrar" style="margin-bottom: 8rem;" onclick="cerrarModal('#modal')">cerrar</button>
+        </div>
         `;
        
         contendor.appendChild(modal);
@@ -430,9 +590,11 @@ function mostrar(especiales,elemeto,clase) {
         card.style.backgroundRepeat = "no-repeat";
         card.dataset.id=id;
         
-        const layout = document.createElement("a");
+        const layout = document.createElement("div");
         layout.classList.add("layout");
-        layout.href = "/categorias?id="+id;
+        layout.addEventListener("click",()=>{
+            modalM(id,categoria)
+        })
         card.appendChild(layout);
         card.classList.add(clase);
       
@@ -445,6 +607,27 @@ function mostrar(especiales,elemeto,clase) {
 
        
        
+    }
+
+    function modalM(id,nombre){
+        document.body.style.overflow = 'hidden';
+        const modal = document.createElement("div");
+        const contendor = document.querySelector("body");
+       
+        modal.addEventListener("click",()=>{
+            cerrarModal("#modal-menu");
+        })
+        modal.id="modal-menu";
+        modal.innerHTML = `
+        <div class="modal" id="modal-menu">
+        <div class="modal-content" id="modal-menu-content">
+            <h2>${nombre}</h2>
+        
+        </div>
+        </div>
+        `;
+        contendor.appendChild(modal);
+        FindByAll("categoria_id",id,"#modal-menu-content","menu-card",2);
     }
 
 

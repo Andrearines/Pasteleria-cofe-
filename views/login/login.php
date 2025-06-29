@@ -1,7 +1,7 @@
 
 
 <div class="login">
-    <main class=" " id="login">
+    <main class="subir " id="login">
     <div class="form "id="login-form">
         <h2>Login</h2>
         <form method="POST">

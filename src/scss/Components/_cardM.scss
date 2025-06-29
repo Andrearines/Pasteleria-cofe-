@@ -1,9 +1,46 @@
 .especial-menu{
     padding: 1rem;
    
-    margin-bottom: 20vh;
+   
 }
 
+.menu-card{
+    margin:1rem 0;
+    border-radius: 3rem;
+    position: relative;
+    height: 30vh;
+    width: 100%;
+
+    
+    .layout{
+        h2{
+            margin-top: 30%;
+            text-align: end;
+            color: white;
+            font-size: 2rem;
+        }
+        display: block;
+        border-radius: 3rem;
+        position: absolute;
+        inset: 0;
+        background-color: rgba(0, 0, 0, 0.466);
+        padding: 1rem;
+       
+        h2{
+            color: rgba(255, 255, 255, 0.897);
+        }
+         transition: background-color 0.3s ease-in-out;
+        &:hover{
+            transition: background-color 0.3s ease-in-out;
+            
+            background-color: rgba(0, 0, 0, 0.664);
+            h2{
+            color: aliceblue;
+           }
+        }
+    }
+
+}
 .categoria-card{
 
     margin:0  1rem ;

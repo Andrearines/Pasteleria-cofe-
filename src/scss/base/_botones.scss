@@ -4,3 +4,12 @@
 width:100%;
 }
 
+.boton-blanco{
+    @include boton(rgb(255, 255, 255),rgb(37, 37, 37),block);
+    margin-top: 1rem;
+    color: rgb(0, 0, 0);
+    &:hover{
+        color: rgb(255, 255, 255);
+    }
+width:100%;
+}

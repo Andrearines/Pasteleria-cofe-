@@ -6,6 +6,8 @@ use models\main;
 use models\user;
 use models\menu;
 use models\categoria;
+use models\envios;
+use models\pedidos;
 
 class API{
     public static function findbyall(){
@@ -42,29 +44,50 @@ public static function call(){
     echo json_encode($r);
   }
 
-  public static function confirm(Router $r){
+  public static function confirm(){
     $token = $_GET['token'] ?? null;
         $user= user::confirm($token);
         echo json_encode($user);
   }
-  public static function forget(Router $r){
+  public static function forget(){
     $r = new user($_POST);
     $r = $r->forget();
     echo json_encode($r);
   }
 
-  public static function login(Router $r){
+  public static function login(){
     $user = new user($_POST);
     $r = $user->login();
     echo json_encode($r);
   }
 
-  public static function reset(Router $r){
+  public static function reset(){
    
    $user = new user($_POST);
    $user->token=$_GET['token'];
     $r = $user->reset();
     echo json_encode($r);
+  }
+
+  //-------------------------------------------------------------------------------------------
+  //-------------------------------------------------------------------------------------------
+  //-------------------------------------------------------------------------------------------
+  //-------------------------------------------------------------------------------------------
+  //---------------------------------------envio-----------------------------------------------
+  //-------------------------------------------------------------------------------------------
+  //-------------------------------------------------------------------------------------------
+  //-------------------------------------------------------------------------------------------
+  //-------------------------------------------------------------------------------------------
+  //-------------------------------------------------------------------------------------------
+
+
+  public static function envio(){
+    $pedido=new pedidos(
+    $_POST["usuario_id"],
+    $_POST["fecha"],
+    $_POST["hora"]
+    );
+echo json_encode();
   }
 
 }
