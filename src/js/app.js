@@ -452,17 +452,23 @@ async function FindByAll(column, value,elemeto,clase,tipo) {
    async function enviar(){
         const id = document.querySelector("#perfil-id").value;
         const fecha = document.querySelector("#fecha").value;
-        if(fecha==null){
+        if(fecha==null || fecha==""){
             Swal.fire({
                 title: "Fecha no válida",
                 text: "Por favor, seleccione una fecha",
                 icon: "error"
             });
-        }
+        }else{
         const hora = document.querySelector("#hora").value;
         const direccion = document.querySelector("#direccion").value;
     
-       
+        Swal.fire({
+            title: "Procesando...",
+            text: "Por favor, espere.",
+            icon: "info",
+            showConfirmButton: false,
+        });
+        
         const $url = "/api/envio";
         carrito.forEach(async item => {
             const formData = new FormData();
@@ -470,34 +476,26 @@ async function FindByAll(column, value,elemeto,clase,tipo) {
             formData.append('fecha', fecha);
             formData.append('hora', hora);
             formData.append('direccion', direccion);
-            formData.append('pastel_id', item.id);
+            formData.append('pastel_id', parseInt(item.id));
             formData.append('cantidad', item.cantidadint);
-            Swal.fire({
-                title: "Procesando...",
-                text: "Por favor, espere.",
-                icon: "info",
-                showConfirmButton: false,
-            });
+        
             const response = await fetch($url,{
                 method: "POST",
                 body: formData
             })
             const data = await response.json();
-            if(data==true){
-                Swal.fire({
-                    title: "Pedido enviado",
-                    text: "El pedido ha sido enviado correctamente",
-                    icon: "success"
-                });
-            }else{
-                Swal.fire({
-                    title: "Error",
-                    text: data,
-                    icon: "error"
-                });
-            }
-       
+           
         })
+            Swal.fire({
+                title: "Pedido enviado",
+                text: "El pedido ha sido enviado correctamente",
+                icon: "success"
+            });
+            carrito=[];
+            modalCarrito();
+       
+   
+     }
     }
 
     function eliminarItem(id){

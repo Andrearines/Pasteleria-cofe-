@@ -15,7 +15,11 @@ class pedidos extends main{
     public function save($img){
         $this->validate();
         if(empty(static::$errors)){
-            $query = "INSERT INTO " . static::$table . " () VALUES ('{}')";
+            $query = "INSERT INTO " . static::$table . " (usuario_id,fecha,hora) VALUES (
+            '{$this->usuario_id}',
+            '{$this->fecha}',
+            '{$this->hora}'
+            )";
             $result = self::$db->query($query);
         if($result){
             return self::$db->insert_id;

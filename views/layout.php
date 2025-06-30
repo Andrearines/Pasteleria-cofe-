@@ -2,8 +2,9 @@
 
 if(!isset($_SESSION)){
 session_start();
+$_SESSION=['admin'=>false,"login"=>false];
 }
-$auth = $_SESSION['admin'] ?? null;
+
 if(!isset($inicio)){
 
     $inicio=false;
@@ -11,7 +12,7 @@ if(!isset($inicio)){
 
 if(!isset($titulo)){
 
-    $tituo="";
+    $titulo="";
 }
 if(!isset($headerFrotante)){
 

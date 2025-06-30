@@ -87,7 +87,16 @@ public static function call(){
     $_POST["fecha"],
     $_POST["hora"]
     );
-echo json_encode();
+    $id=$pedido->save("");
+    $envios= new envios(
+      $id,
+      $_POST["pastel_id"],
+      $_POST["cantidad"],
+      $_POST["direccion"]
+    );
+    $r=$envios->save("");
+
+echo json_encode($r);
   }
 
 }
