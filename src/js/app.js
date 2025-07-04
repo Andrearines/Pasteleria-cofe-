@@ -3,8 +3,9 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function iniciarApp() {
-    
-
+    if(document.querySelector("#admin-panel")){
+        adminPanel();   
+    }
 
     if(document.querySelector("#reset-form")){
         resetPassword();
@@ -43,6 +44,133 @@ function iniciarApp() {
         login()
     }
 
+}
+
+async function pedidosAdmin(){
+    try {
+      
+        
+        const fecha = document.querySelector("#fecha-filtros-admin");
+        const todos = document.querySelector("#todos-filtro-admin");
+        
+        if (!fecha || !todos) {
+            throw new Error("No se encontraron los elementos de filtro");
+        }
+        
+        const url = `/api/admin/ordenes?fecha=${fecha.value}&todos=${todos.checked}`;
+      
+        const response = await fetch(url, {
+            method: "GET",
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+        
+        if (!response.ok) {
+            throw new Error(`Error HTTP: ${response.status} - ${response.statusText}`);
+        }
+        
+        const data = await response.json();
+    
+        
+        if (data.error) {
+            console.error("❌ Error en la API:", data.error);
+            Swal.fire({
+                title: "Error en la consulta",
+                text: data.error,
+                icon: "error"
+            });
+            return;
+        }
+        
+        console.log(`✅ Se cargaron ${data.length} pedidos`);
+        mostrarPedidos(data);
+        
+    } catch (error) {
+        console.error("❌ Error en pedidosAdmin:", error);
+        Swal.fire({
+            title: "Error de conexión",
+            text: `No se pudieron cargar los pedidos: ${error.message}`,
+            icon: "error"
+        });
+    }
+}
+
+function adminPanel(){
+   
+    
+    const fecha = document.querySelector("#fecha-filtros-admin");
+    const todos = document.querySelector("#todos-filtro-admin");
+    pedidosAdmin();
+    
+    // Configurar eventos de filtro
+    fecha.addEventListener("change", async (e) => {
+        e.preventDefault();
+       
+        await pedidosAdmin();
+    });
+    
+    todos.addEventListener("change", async (e) => {
+        e.preventDefault();
+     
+        await pedidosAdmin();
+    });
+    
+   
+}
+
+
+
+function mostrarPedidos(pedidos){
+   
+    
+    const contendor = document.querySelector("#pedidos-admin");
+    if (!contendor) {
+        console.error("❌ No se encontró el contenedor de pedidos");
+        return;
+    }
+    
+    // Limpiar contenedor
+    contendor.innerHTML = '';
+    
+    if (!pedidos || pedidos.length === 0) {
+        contendor.innerHTML = `
+            <div class="no-pedidos">
+                <p>📭 No hay pedidos para mostrar</p>
+                <small>Intenta cambiar la fecha o marcar "todo"</small>
+            </div>
+        `;
+       
+        return;
+    }
+    
+   
+    
+    pedidos.forEach((pedido, index) => {
+        const card = document.createElement("div");
+        card.classList.add("pedido-admin");
+        card.innerHTML = `
+            <div class="pedido-info">
+                <h3>👤 Cliente: ${pedido.nombre || 'Sin nombre'}</h3>
+                <p>Información de pastel</p>
+                <div class="pedido-info-content">
+                <p>🍰 Pastel: ${pedido.nombre_pastel || 'Sin nombre'}</p>
+                <p>🔢 Cantidad: ${pedido.cantidad || 0}</p>
+                <p>💰 Total: $${pedido.total || 0}</p>
+                </div>
+                <p>Información de envio</p>
+                <div class="pedido-info-content-2">
+                <p>📅 Fecha: ${pedido.fecha || 'Sin fecha'}</p>
+                <p>📍 Dirección: ${pedido.direccion || 'Sin dirección'}</p>
+                <p>🕐 Hora: ${pedido.hora || 'Sin hora'}</p>
+              </div>
+
+            </div>
+        `;
+        contendor.appendChild(card);
+    });
+    
+    
 }
 
 async function login(){

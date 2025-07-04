@@ -3,6 +3,7 @@ require_once __DIR__. '/../includes/app.php';
 use controllers\paginas;
 use controllers\login;
 use controllers\API;
+use controllers\admin;
 use MVC\Router;
 $r=new Router;
 
@@ -29,6 +30,9 @@ $r->get("/",[paginas::class,'visit']);
 //home
 $r->get("/home",[paginas::class,"home"]);
 
+//admin
+$r->get("/admin",[admin::class,"index"]);
+
 // API Routes(login)
 $r->get("/api/FindByAll",[API::class,'findbyall']);
 $r->get("/api/categorias/all",[API::class,'call']);
@@ -38,5 +42,9 @@ $r->post("/api/login/forget",[API::class,'forget']);
 $r->post("/api/login/reset",[API::class,'reset']);
 $r->post("/api/envio",[API::class,'envio']);
 $r->get("/api/login/confirm",[API::class,'confirm']);
+
+//API admin
+$r->get("/api/admin/ordenes",[API::class,'ordenes']);
+
 
 $r->Rutas();

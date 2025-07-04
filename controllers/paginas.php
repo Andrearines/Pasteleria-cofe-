@@ -12,7 +12,7 @@ class paginas{
      //-------------------------------------------------------------------------
      public static function home(Router $r){
         auth();
-        $r->view("/home/index.php",["inicio"=> true,"titulo"=>"categorias"]);
+        $r->view("/home/index.php",["inicio"=> true,"titulo"=>$_SESSION["nombre"]]);
      }
     //-------------------------------------------------------------------------
     //-------------------------------------------------------------------------

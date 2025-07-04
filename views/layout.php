@@ -18,6 +18,13 @@ if(!isset($headerFrotante)){
 
     $headerFrotante=false;
 }
+if(!isset($pageAdmin)){
+    if($_SESSION["admin"]){
+        $pageAdmin=true;
+    }else{
+    $pageAdmin= false;
+}
+}
 
 
 
@@ -43,6 +50,10 @@ if(!isset($headerFrotante)){
                 <?php if($_SESSION["login"]==true){?>
                 <div class="acciones ">
                     <a href="/logout" class="boton">salir</a>
+                    <?php if($_SESSION["admin"] && $pageAdmin ){?>
+                    <a class="boton boton-admin" href="/admin">admin</a>
+                  <?php }?>
+                  <?php if($pageAdmin){ ?>
                     <div id="carrito">
                     <script src="https://animatedicons.co/scripts/embed-animated-icons.js"></script>
                        <animated-icons
@@ -52,6 +63,7 @@ if(!isset($headerFrotante)){
                          height="100"
                          width="100"
                        ></animated-icons>
+                       <?php }?>
                    </div>
                 </div>
                 <?php }?>

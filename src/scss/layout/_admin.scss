@@ -1,0 +1,94 @@
+.admin{
+   
+    h1 ,p{
+        text-align: center;
+        margin-top: 2rem;
+
+    }
+  
+    .busquedad-admin {
+   
+    .form-group{
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+gap: 1rem;
+            h2{
+                margin-right: 1rem;
+            }
+            input{
+                width: 100%;
+                padding: 1rem;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+            .todos {
+                --_clr-primary: #666;
+                --_clr-hover: #f33195;
+                --_clr-checked: #127acf;
+              }
+              .todos > div {
+                --_clr-current: var(--_clr-primary);
+              
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+              }
+              .todos > div + div {
+                margin-block-start: 0.5rem;
+              }
+              .todos label {
+                cursor: pointer;
+                color: var(--_clr-current);
+                transition: color 150ms ease-in-out;
+              }
+              
+              /* styled checkbox */
+              .todos input[type="checkbox"] {
+                appearance: none;
+                outline: none;
+                width: 1.5rem;
+                height: 1.5rem;
+                aspect-ratio: 1;
+                padding: 0.25rem;
+                background: transparent;
+                border: 1px solid var(--_clr-current);
+                border-radius: 2px;
+                display: grid;
+                place-content: center;
+                cursor: pointer;
+              }
+              .todos input[type="checkbox"]::after {
+                content: "\2714";
+                opacity: 0;
+                transition: opacity 150ms ease-in-out;
+                color: var(--_clr-checked);
+                font-size: inherit;
+                font-family: inherit;
+              }
+              
+              .todos label:hover,
+              .todos input[type="checkbox"]:focus-visible,
+              .todos input[type="checkbox"]:focus-visible + label,
+              .todos input[type="checkbox"]:hover,
+              .my-form input[type="checkbox"]:hover + label {
+                --_clr-current: var(--_clr-hover);
+              }
+              .todos input[type="checkbox"]:focus-visible::after,
+              .todos input[type="checkbox"]:hover::after {
+                opacity: 0.5;
+                color: var(--_clr-hover);
+              }
+              
+              .todos input[type="checkbox"]:checked + label:not(:hover),
+              .todos input[type="checkbox"]:checked:not(:hover) {
+                --_clr-current: var(--_clr-checked);
+              }
+              .todos input[type="checkbox"]:checked::after {
+                opacity: 1;
+              }
+              
+            }
+        }
+    }
